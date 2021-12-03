@@ -8,7 +8,7 @@ with open("inputs/day3") as data:
 def get_counter(input_data):
   bit_locations = list(map(str,range(len(input_data[0]))))
   mapped = [map(''.join,list((zip(bit_locations, map(str,i))))) for i in input_data]
-  full_list = list(itertools.chain(*mapped)) # every element is a bit location from left + that bit
+  full_list = list(itertools.chain(*mapped)) # every element is a bit location from left + that bit's value
   return collections.Counter(full_list)
 counter = get_counter(data)
 
