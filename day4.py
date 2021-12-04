@@ -1,58 +1,44 @@
-import collections
 import itertools
 import numpy as np
 
 with open("inputs/day4") as data:
   f = data.read()
   stripped = [i.strip() for i in f.split('\n\n')]
-  bingo_row = stripped[0]
+  bingo_row = np.array(stripped[0].split(',')).astype(np.int64)
 
-  tables = list(map(lambda x: np.array_split(x.split(), 5), stripped[1:]))
+  tables = np.array(list(map(lambda x: np.array_split(x.split(), 5), stripped[1:]))).astype(np.int64)
 
-coord = collections.namedtuple('Coord', ['x', 'y', 'val'])
-bingo_locs = collections.defaultdict(set)
-actual_locs = collections.defaultdict(set)
 
-tables_won = dict(zip(range(len(tables)), list(itertools.repeat(False, len(tables)))))
+def did_table_win(table_number, current_numbers) -> bool:
+  coords_of_current_numbers = tuple(zip(*np.where(np.isin(tables[table_number], current_numbers))))
+  if len(coords_of_current_numbers) > 0:
+    back_to_np = np.array(coords_of_current_numbers)
+    y_count = np.bincount(back_to_np[:,0]).max()
+    x_count = np.bincount(back_to_np[:,1]).max()
+    # If there is 5 same x_value or 5 same y values, it means BINGO
+    if y_count == 5 or x_count==5:
+      return True
+  return False
 
-for d, table in enumerate(tables):
-    for i, row in enumerate(table):
-      for k, val in enumerate(row):
-        actual_locs[d].add(coord(k, i, int(val)))
-
-def did_table_win(table_number) -> bool:
-  bingo_coords: set = bingo_locs[table_number]
-  ys = list(map(lambda a: 'y'+str(a.y), bingo_coords))
-  xs = list(map(lambda a: 'x'+str(a.x), bingo_coords))
-  counter = collections.Counter(itertools.chain(ys, xs))
-  most_common = counter.most_common(1)
-
-  if len(most_common) < 1:
-    return False
-
-  most_common_val: int = most_common[0][1]
-  # if there is 5 same x coords or 5 same y coords in bingo_locs
-  return 5 == most_common_val
-
-def calculate_final_score(table_number: int, latest_bingo_number: int) -> int:
-  unmarked_coords: set = bingo_locs[table_number] ^ actual_locs[table_number]
-  unmarked_sum: int = sum(map(lambda x: x.val, unmarked_coords))
-  return unmarked_sum*latest_bingo_number
+def calculate_final_score(table_number: int, latest_bingo_number: int, current_numbers) -> int:
+  only_unmarked: np.array = tables[table_number]
+  # set those that are not in current_numbers to zero
+  only_unmarked[np.where(np.isin(only_unmarked,current_numbers))] = 0
+  return np.sum(only_unmarked)*latest_bingo_number
 
 def get_nth_winner_final_score(nth_winner: int = 1) -> int:
-  for num in bingo_row.split(','):
-    for d, table in enumerate(tables):
-      for i, row in enumerate(table):
-        for k, val in enumerate(row):
-          if num == val:
-            bingo_locs[d].add(coord(k, i, int(val)))
+  current_numbers = []
+  tables_won = dict(zip(range(tables.shape[0]), list(itertools.repeat(False, tables.shape[0]))))
 
-      is_done: bool = did_table_win(d)
+  for num in bingo_row:
+    current_numbers.append(num)
+    for d in range(len(tables)):
+      if tables_won[d]: continue
+      is_done: bool = did_table_win(d, current_numbers)
       if is_done == True:
         tables_won[d] = True
         if sum(tables_won.values()) == nth_winner or nth_winner == -1 and all(tables_won.values()):
-          return calculate_final_score(d, int(num))
-
+          return calculate_final_score(d, num, current_numbers)
 
 print(get_nth_winner_final_score())
 print(get_nth_winner_final_score(-1))
