@@ -33,6 +33,9 @@ def calculate_final_score(table_number: int, latest_bingo_number: int, current_n
 def get_nth_winner_final_score(tables, bingo_row, nth_winner: int = 1) -> int:
   current_numbers = []
   tables_won = dict(zip(range(tables.shape[0]), list(itertools.repeat(False, tables.shape[0]))))
+  if nth_winner < 0:
+    max_number_of_winners = tables.shape[0]+1
+    nth_winner = max_number_of_winners+nth_winner
 
   for num in bingo_row:
     current_numbers.append(num)
@@ -41,7 +44,7 @@ def get_nth_winner_final_score(tables, bingo_row, nth_winner: int = 1) -> int:
       is_done: bool = did_table_win(d, current_numbers)
       if is_done == True:
         tables_won[d] = True
-        if sum(tables_won.values()) == nth_winner or nth_winner == -1 and all(tables_won.values()):
+        if sum(tables_won.values()) == nth_winner:
           return calculate_final_score(d, num, current_numbers)
 
 print("Part 1:", get_nth_winner_final_score(tables, bingo_row))
