@@ -10,8 +10,11 @@ with open("inputs/day4") as data:
 
 def did_table_win(table_number, current_numbers) -> bool:
   coords_of_current_numbers = np.where(np.isin(tables[table_number], current_numbers))
-  if coords_of_current_numbers[0].shape[0] > 0:
-    np_arr = np.transpose(np.array([coords_of_current_numbers[0], coords_of_current_numbers[1]]))
+  np_arr = np.transpose(np.array([coords_of_current_numbers[0], coords_of_current_numbers[1]]))
+
+  # check that there was even one match because bincount will cause error if it is given empty
+  # array
+  if np_arr.shape[0] > 0:
     y_count: int = np.bincount(np_arr[:,0]).max()
     x_count: int = np.bincount(np_arr[:,1]).max()
     # If there is 5 same x_value or 5 same y values, it means BINGO
