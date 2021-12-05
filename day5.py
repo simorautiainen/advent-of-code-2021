@@ -11,16 +11,16 @@ counter_diagonal = collections.Counter()
 point = collections.namedtuple('Point', ['x', 'y'])
 
 for c, points in enumerate(data):
-  first = point(*points[0])
-  second = point(*points[1])
+  from_point = point(*points[0])
+  to_point = point(*points[1])
   
-  if first.x == second.x or first.y == second.y: # horizontal and vertical
-    ys = min([first.y, second.y]) + np.arange(abs(first.y-second.y)+1)
-    xs = min([first.x, second.x]) + np.arange(abs(first.x-second.x)+1)
+  if from_point.x == to_point.x or from_point.y == to_point.y: # horizontal and vertical
+    ys = min([from_point.y, to_point.y]) + np.arange(abs(from_point.y-to_point.y)+1)
+    xs = min([from_point.x, to_point.x]) + np.arange(abs(from_point.x-to_point.x)+1)
 
     counter.update(map(lambda x: point(*x), itertools.product(xs, ys)))
   else: # Diagonal
-    left_point, right_point = sorted([first, second], key=lambda x: x.x)
+    left_point, right_point = sorted([from_point, to_point], key=lambda x: x.x)
     length = right_point.x-left_point.x+1
 
     xs = left_point.x + np.arange(length)
