@@ -14,12 +14,12 @@ for c, points in enumerate(data):
   first = point(*points[0])
   second = point(*points[1])
   
-  if first.x == second.x or first.y == second.y:
+  if first.x == second.x or first.y == second.y: # horizontal and vertical
     ys = min([first.y, second.y]) + np.arange(abs(first.y-second.y)+1)
     xs = min([first.x, second.x]) + np.arange(abs(first.x-second.x)+1)
 
     counter.update(map(lambda x: point(*x), itertools.product(xs, ys)))
-  else:
+  else: # Diagonal
     left_point, right_point = sorted([first, second], key=lambda x: x.x)
     length = right_point.x-left_point.x+1
 
