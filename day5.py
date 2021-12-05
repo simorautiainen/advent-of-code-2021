@@ -4,7 +4,9 @@ import numpy as np
 
 with open("inputs/day5") as data:
   f = data.readlines()
-  data = np.array(list(map(lambda x: [x[0].split(','), x[1].split(',')],[i.strip().split(' -> ') for i in f]))).astype(np.int32)
+  data = [i.strip().split(' -> ') for i in f]
+  data = list(map(lambda x: [x[0].split(','), x[1].split(',')],data))
+  data = np.array(data).astype(np.int32)
 
 counter = collections.Counter()
 counter_diagonal = collections.Counter()
