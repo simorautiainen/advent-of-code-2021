@@ -1,10 +1,9 @@
 import collections
 import itertools
-import numpy as np
 
 with open("inputs/day6") as data:
   f = data.readlines()
-  data=np.array(f[0].split(',')).astype(np.int32)
+  data=list(map(int, f[0].split(',')))
   
 def get_nth_day_total(data, days):
 
@@ -20,7 +19,6 @@ def get_nth_day_total(data, days):
     extras[i] = 0
 
   return counter.total()
-
 
 print("Part 1", get_nth_day_total(data, 80))
 print("Part 2", get_nth_day_total(data, 256))
