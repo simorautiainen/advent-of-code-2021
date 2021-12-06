@@ -3,7 +3,7 @@ import itertools
 
 with open("inputs/day6") as data:
   f = data.readlines()
-  data=list(map(int, f[0].split(',')))
+  data = list(map(int, f[0].split(',')))
   
 def get_nth_day_total(data, days):
 
