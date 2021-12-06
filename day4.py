@@ -1,7 +1,6 @@
 import itertools
 import numpy as np
-import time
-start = time.time()
+
 with open("inputs/day4") as data:
   f = data.read()
   stripped = [i.strip() for i in f.split('\n\n')]
@@ -53,4 +52,3 @@ def get_nth_winner_final_score(tables, bingo_row, nth_winner: int = 1) -> int:
 
 print("Part 1:", get_nth_winner_final_score(tables, bingo_row))
 print("Part 2:", get_nth_winner_final_score(tables, bingo_row, -1))
-print(time.time() - start)
