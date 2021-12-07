@@ -9,7 +9,7 @@ with open("inputs/day7") as data:
 dicta = collections.defaultdict(int)
 for i in range(min(data), max(data)):
   for k in data:
-    dicta[i] += abs(k-i)+1
+    dicta[i] += abs(k-i)
 
 print("Part 1", min(list(dicta.values())))
 
