@@ -76,5 +76,3 @@ for i in data:
 
 print("Part 1:", count1)
 print("Part 2", count)
-dicta = collections.defaultdict(int)
-counter = collections.Counter()
