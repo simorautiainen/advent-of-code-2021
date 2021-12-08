@@ -32,7 +32,7 @@ for i in data:
 
   e = list(set(actual_numbers[9]) ^ all_possible)[0]
 
-  zero_six = six_nine_zero[~(six_nine_zero == actual_numbers[9])]
+  zero_six = six_nine_zero[six_nine_zero != actual_numbers[9]]
 
   for k in zero_six:
     if set(actual_numbers[1]) <= set(k): # its zero
@@ -50,7 +50,7 @@ for i in data:
   three_five = two_three_five[two_three_five != actual_numbers[2]]
   actual_numbers[3] = next(filter(lambda x: c in x, three_five))
   actual_numbers[5] = three_five[three_five != actual_numbers[3]][0]
-  
+
   final_str = ""
 
   for u in output:
