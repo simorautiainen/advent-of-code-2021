@@ -1,6 +1,6 @@
 import collections
-import itertools
 import numpy as np
+
 with open("inputs/day8") as data:
   f = data.readlines()
   data = list(map(lambda x: x.split(' | '), f))
@@ -13,7 +13,7 @@ for i in data:
   actual_numbers = {}
 
   inp = i[0].strip().split(' ')
-  ut = i[1].strip().split(' ')
+  output = i[1].strip().split(' ')
   combined = np.array(list(map(lambda x: ''.join(sorted(x)), inp)))
 
   mappings = collections.defaultdict(str)
@@ -63,14 +63,14 @@ for i in data:
   actual_numbers[5] = set(list(filter(lambda x: not actual_numbers[3] == set(x), three_five))[0])
   final_str = ""
 
-  for u in ut:
+  for u in output:
     for key, value in actual_numbers.items():
       if value == set(u):
         final_str += str(key)
         
   count += int(final_str)
   finding_nums = [4,2, 7, 3]
-  for u in ut:
+  for u in output:
     if len(u) in finding_nums:
         count1 += 1
 
