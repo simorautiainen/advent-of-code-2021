@@ -24,8 +24,8 @@ for i in data:
   actual_numbers[7] = set(combined[np.where(len_arr == 3)][0])
   actual_numbers[8] = set(combined[np.where(len_arr == 7)][0])
 
-  six_nine_zero = list(set(combined[np.where(len_arr==6)]))
-  two_three_five = list(set(combined[np.where(len_arr==5)]))
+  six_nine_zero = np.unique(combined[np.where(len_arr==6)])
+  two_three_five = np.unique(combined[np.where(len_arr==5)])
 
   for iter in six_nine_zero:
     is_legit = True
@@ -39,7 +39,7 @@ for i in data:
   e = list(actual_numbers[9] ^ all_possible)[0]
 
   zero_six = list(filter(lambda x: not actual_numbers[9] == set(x), six_nine_zero))
-  
+
   for k in zero_six:
     de = list(actual_numbers[9] ^ set(k))
     is_legit = True
