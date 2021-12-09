@@ -7,7 +7,6 @@ with open("inputs/day9") as data:
   f = data.readlines()
   data = np.array(list(map(lambda x: list(x.strip()), f))).astype(np.int32)
 
-print(data)
 legits = []
 
 vecs = [point(0,1), point(1,0), point(-1,0), point(0, -1)]
@@ -50,10 +49,7 @@ def is_legit_point(inp_point, already_checked_locs):
 
 sizes = []
 for a_point in legits:
-  bas_arr=  find_bas(a_point, [a_point])
-  if len(bas_arr) == 105:
-    longest = bas_arr
-
+  bas_arr = find_bas(a_point, [a_point])
   sizes.append(len(bas_arr))
 
 print("Part 2", functools.reduce(operator.mul, sorted(sizes)[-3:]))
