@@ -2,11 +2,12 @@ import operator
 import functools
 import numpy as np
 import collections
-point = collections.namedtuple('point', ['x', 'y'])
+
 with open("inputs/day9") as data:
   f = data.readlines()
   data = np.array(list(map(lambda x: list(x.strip()), f))).astype(np.int32)
-
+  
+point = collections.namedtuple('point', ['x', 'y'])
 vecs = [point(0,1), point(1,0), point(-1,0), point(0, -1)]
 def is_point_in_bounds(inp_point):
   return inp_point.x >=0 and inp_point.x < data.shape[1] and inp_point.y >=0 and inp_point.y < data.shape[0]
