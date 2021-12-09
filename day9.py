@@ -13,7 +13,7 @@ def is_point_in_bounds(inp_point):
   return inp_point.x >=0 and inp_point.x < data.shape[1] and inp_point.y >=0 and inp_point.y < data.shape[0]
 
 # part 1
-legits = []
+smallest_points = []
 for iy, ix in np.ndindex(data.shape):
 
   is_smallest = True
@@ -24,10 +24,10 @@ for iy, ix in np.ndindex(data.shape):
       is_smallest = False
       break
   if is_smallest:
-    legits.append(point(ix,iy))
+    smallest_points.append(point(ix,iy))
 
 total = 0
-for x,y in legits:
+for x,y in smallest_points:
   total += data[y,x]+1
 print(f"Part 1 = {total}")
 
@@ -43,7 +43,7 @@ def find_bas(inp_point: point, legit_locs: list[point]) -> list[point]:
   return legit_locs
 
 sizes = []
-for a_point in legits:
+for a_point in smallest_points:
   bas_arr = find_bas(a_point, [a_point])
   sizes.append(len(bas_arr))
 
