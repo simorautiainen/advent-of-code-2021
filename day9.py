@@ -32,19 +32,19 @@ for x,y in smallest_points:
 print(f"Part 1 = {total}")
 
 #part 2
-def find_bas(inp_point: point, legit_locs: list[point]) -> list[point]:
+def find_basin(inp_point: point, legit_locs: list[point]) -> list[point]:
   for vec in vecs:
     new_p = point(inp_point.x+vec.x, inp_point.y+vec.y)
 
     if (not new_p in legit_locs) and is_point_in_bounds(new_p) and not (data[new_p.y, new_p.x] == 9):
       legit_locs.append(new_p)
-      find_bas(new_p, legit_locs)
+      find_basin(new_p, legit_locs)
 
   return legit_locs
 
 sizes = []
 for a_point in smallest_points:
-  bas_arr = find_bas(a_point, [a_point])
+  bas_arr = find_basin(a_point, [a_point])
   sizes.append(len(bas_arr))
 
 print("Part 2", functools.reduce(operator.mul, sorted(sizes)[-3:]))
