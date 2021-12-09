@@ -6,7 +6,7 @@ import collections
 with open("inputs/day9") as data:
   f = data.readlines()
   data = np.array(list(map(lambda x: list(x.strip()), f))).astype(np.int32)
-  
+
 point = collections.namedtuple('point', ['x', 'y'])
 vecs = [point(0,1), point(1,0), point(-1,0), point(0, -1)]
 def is_point_in_bounds(inp_point):
@@ -35,8 +35,7 @@ print(f"Part 1 = {total}")
 def find_bas(inp_point: point, legit_locs: list[point]) -> list[point]:
   for vec in vecs:
     new_p = point(inp_point.x+vec.x, inp_point.y+vec.y)
-    
-    # Is new coordinate inbounds of array
+
     if (not new_p in legit_locs) and is_point_in_bounds(new_p) and not (data[new_p.y, new_p.x] == 9):
       legit_locs.append(new_p)
       find_bas(new_p, legit_locs)
