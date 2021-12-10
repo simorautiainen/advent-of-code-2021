@@ -1,6 +1,3 @@
-import operator
-import functools
-import numpy as np
 import collections
 
 with open("inputs/day10") as file:
@@ -22,10 +19,10 @@ for line in data:
     elif mark in chunk_dict['close']:
       popped = que.pop()
       if chunk_dict['open'].index(popped) != chunk_dict['close'].index(mark):
-        total+=point_dict[mark]
+        total+=point_dict[mark] # part 1
         que.clear()
         break
-  if que:
+  if que: # part 2
     cur_total = 0
     while que:
       popped = que.pop()
