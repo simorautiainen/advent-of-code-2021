@@ -14,23 +14,21 @@ def is_point_in_bounds(inp_point, data):
 
 def do_one_iter(data):
   flashes = 0
-  flashed = []
   data += 1
   coords = [point(*one_point[::-1]) for one_point in zip(*np.where(data >= 10))]
   for a_point in coords:
-    flashes += flash_a_point(a_point, data, flashed)
+    flashes += flash_a_point(a_point, data)
   data[data >= 10] = 0
   return flashes
 
-def flash_a_point(inp_point, data, flashed):
+def flash_a_point(inp_point, data):
   total_flashes = 1
   for vec in vecs:
     new_p = point(vec.x + inp_point.x, vec.y + inp_point.y)
     if is_point_in_bounds(new_p, data):
       data[new_p.y, new_p.x] += 1
-      if data[new_p.y, new_p.x] == 10 and not new_p in flashed:
-        flashed.append(new_p)
-        total_flashes += flash_a_point(new_p, data, flashed)
+      if data[new_p.y, new_p.x] == 10:
+        total_flashes += flash_a_point(new_p, data)
   return total_flashes
 
 total = 0
