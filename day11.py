@@ -1,13 +1,10 @@
-import operator
 import itertools
-import functools
 import numpy as np
 import collections
 
 with open("inputs/day11") as data:
   f = data.readlines()
   data = np.array(list(map(lambda x: list(x.strip()), f))).astype(np.int32)
-
 
 point = collections.namedtuple('point', ['x', 'y'])
 vecs = [point(i, k) for i in range(-1,2) for k in range(-1,2) if not(k == 0 and i == 0)]
