@@ -1,5 +1,6 @@
 
 import collections
+
 with open("inputs/day12") as file:
   f = file.readlines()
   data = list(map(lambda x: x.strip().split('-'), f))
@@ -21,7 +22,7 @@ print("Part 1:", recurse_through_part1(['start'], connections))
 
 def recurse_through_part2(current_path, connections):
   visits = collections.Counter(filter(str.islower, current_path))
-  is_cave_visited_twice = visits.most_common(1)[0][-1] == 2
+  is_cave_visited_twice = max(visits.values()) == 2
   amount = 0
   for connection in connections[current_path[-1]]:
     if connection == 'end':
