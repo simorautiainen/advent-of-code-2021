@@ -15,7 +15,7 @@ def recurse_through_part1(current_path, connections):
   for connection in connections[current_path[-1]]:
     if connection == 'end':
       amount+=1
-    elif (connection.islower() and not connection in current_path) or connection.isupper():
+    elif connection.isupper() or (connection.islower() and not connection in current_path):
       amount += recurse_through_part1(current_path+[connection], connections)
   return amount
 print("Part 1:", recurse_through_part1(['start'], connections))
@@ -27,9 +27,9 @@ def recurse_through_part2(current_path, connections):
   for connection in connections[current_path[-1]]:
     if connection == 'end':
       amount += 1
-    elif connection.isupper() or connection != 'start' and (connection.islower() and (not is_cave_visited_twice or not connection in current_path)):
-      new_path = current_path+[connection]
-      amount += recurse_through_part2(new_path, connections)
+    elif connection != 'start' and (connection.isupper() or connection.islower() and
+        (not is_cave_visited_twice or not connection in current_path)):
+      amount += recurse_through_part2(current_path+[connection], connections)
   return amount
 
 print("Part 2", recurse_through_part2(['start'], connections))
