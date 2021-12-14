@@ -22,11 +22,11 @@ def recurse_a_tuple_pair(tuple_pair: tuple, depth: int, current_depth: int = 0) 
   current_depth+=1
   string_pair: str = ''.join(tuple_pair)
   for pair in pairs:
-    pair_condition, inser_char = pair
+    pair_condition, new_char = pair
     if pair_condition == string_pair:
-      counter[inser_char] += 1
-      counter += recurse_a_tuple_pair((tuple_pair[0], inser_char), depth, current_depth)
-      counter += recurse_a_tuple_pair((inser_char, tuple_pair[1]), depth, current_depth)
+      counter[new_char] += 1
+      counter += recurse_a_tuple_pair((tuple_pair[0], new_char), depth, current_depth)
+      counter += recurse_a_tuple_pair((new_char, tuple_pair[1]), depth, current_depth)
   return counter
 
 
