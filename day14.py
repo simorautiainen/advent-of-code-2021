@@ -8,9 +8,9 @@ with open("inputs/day14") as file:
   pairs = list(map(lambda x: x.split(' -> '), pairs.split('\n')))
 
 def do_x_iterations(polymer: str, how_many_iters: int) -> collections.Counter:
-  zipped = zip(polymer, polymer[1:])
+  paired = zip(polymer, polymer[1:])
   counter = collections.Counter(polymer)
-  for tuple_pair in zipped:
+  for tuple_pair in paired:
     counter += recurse_a_tuple_pair(tuple_pair, how_many_iters)
   return counter
 
