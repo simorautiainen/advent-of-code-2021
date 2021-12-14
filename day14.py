@@ -1,7 +1,6 @@
 
 import collections
 import functools
-
 with open("inputs/day14") as file:
   f = file.read()
   polymer, pairs = f.split('\n\n')
@@ -32,6 +31,5 @@ def recurs(inp_zip, how_many_iters, cur_iter=0):
 
 counter = do_x_iter_zipper(polymer, 10).most_common()
 print("Part 1:", counter[0][1]-counter[-1][1])
-
 counter = do_x_iter_zipper(polymer, 40).most_common()
 print("Part 2:", counter[0][1]-counter[-1][1])
