@@ -11,11 +11,11 @@ def do_x_iterations(polymer: str, how_many_iters: int) -> collections.Counter:
   zipped = zip(polymer, polymer[1:])
   counter = collections.Counter(polymer)
   for tuple_pair in zipped:
-    counter += recurs(tuple_pair, how_many_iters)
+    counter += recurse_a_tuple_pair(tuple_pair, how_many_iters)
   return counter
 
 @functools.cache
-def recurs(tuple_pair: tuple, depth: int, current_depth: int = 0) -> collections.Counter:
+def recurse_a_tuple_pair(tuple_pair: tuple, depth: int, current_depth: int = 0) -> collections.Counter:
   counter = collections.Counter()
   if depth == current_depth:
     return counter
@@ -25,8 +25,8 @@ def recurs(tuple_pair: tuple, depth: int, current_depth: int = 0) -> collections
     pair_condition, inser_char = pair
     if pair_condition == string_pair:
       counter[inser_char] += 1
-      counter += recurs((tuple_pair[0], inser_char), depth, current_depth)
-      counter += recurs((inser_char, tuple_pair[1]), depth, current_depth)
+      counter += recurse_a_tuple_pair((tuple_pair[0], inser_char), depth, current_depth)
+      counter += recurse_a_tuple_pair((inser_char, tuple_pair[1]), depth, current_depth)
   return counter
 
 
