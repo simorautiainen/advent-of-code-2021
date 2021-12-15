@@ -10,7 +10,6 @@ with open("inputs/day15") as data:
 print(f"{data =}")
 
 point = collections.namedtuple('point', ['x', 'y'])
-vecs = [point(0, 1), point(1, 0)]
 
 def is_point_in_bounds(inp_point, data):
   return inp_point.x >=0 and inp_point.x < data.shape[1] and inp_point.y >=0 and inp_point.y < data.shape[0]
