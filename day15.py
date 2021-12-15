@@ -12,7 +12,7 @@ print(f"{data =}")
 point = collections.namedtuple('point', ['x', 'y'])
 vecs = [point(0, 1), point(1, 0)]
 
-def is_point_in_bounds(inp_point):
+def is_point_in_bounds(inp_point, data):
   return inp_point.x >=0 and inp_point.x < data.shape[1] and inp_point.y >=0 and inp_point.y < data.shape[0]
 
 start = point(0, 0)
@@ -26,27 +26,34 @@ def print_d(dat):
 def calc(inp_data, start=point(0,0)):
   data = np.copy(inp_data)
   djikstar_data = np.full(data.shape, np.sum(data))
-
-  visited = []
+  shape = djikstar_data.shape
   djikstar_data[start.y, start.x] = 0
-  while len(visited) < djikstar_data.size:
-    print(len(visited))
-    tmp_djikstar = np.copy(djikstar_data)
-    for vis in visited:
-      tmp_djikstar[vis.y, vis.x] = np.sum(data)
-    min_point = point(*np.flip(list(zip(*np.where(tmp_djikstar==np.amin(tmp_djikstar)))))[0])
+  data_sum = np.sum(data)
+  i = 0
+  while True:
+    if i % 1000==0:
+      print(i)
+    i += 1
 
+    min_point = point(*list(zip(*np.where(djikstar_data==np.amin(djikstar_data))))[0][::-1])
+
+    if min_point == point(shape[1]-1, shape[0]-1):
+      return djikstar_data[min_point.y, min_point.x]
     for vec in vecs:
       new_p = point(min_point.x+vec.x, min_point.y+vec.y)
-      if is_point_in_bounds(new_p) and not new_p in visited:
+      if is_point_in_bounds(new_p, data) and djikstar_data[new_p.y, new_p.x] != (data_sum+1):
         to_new_point_total = data[new_p.y, new_p.x]+djikstar_data[min_point.y, min_point.x]
         if djikstar_data[new_p.y, new_p.x] > to_new_point_total:
           djikstar_data[new_p.y, new_p.x] = to_new_point_total
+    djikstar_data[min_point.y, min_point.x] = data_sum+1
 
-    visited.append(min_point)
-  print(djikstar_data.size)
-  return djikstar_data
-shap = data.shape  
+lowest_path = calc(data)
+print("Part 1", lowest_path)
 
-djik = calc(data)
-print("Part 1:", djik[-1,-1])
+part2data = np.hstack((data, data+1, data+2, data+3, data+4))
+part2data = np.array(np.vstack((part2data, part2data+1, part2data+2, part2data+3, part2data+4)))
+part2data = part2data % 9
+part2data[part2data == 0] = 9
+
+lowest_path = calc(part2data)
+print("Part 2", lowest_path)
