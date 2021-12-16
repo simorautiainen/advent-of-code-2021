@@ -1,26 +1,19 @@
-import itertools
-import numpy as np
-import collections
-import functools
 import math
-
+import operator
 with open("inputs/day16") as data:
   f = data.readlines()
-  binary_data = ""
-  for char in f[0]:
-    #print(format(int(char, 16), '04b'))
-    binary_data += format(int(char, 16), '04b')
-
-#print(binary_data)
+  binary_data = ''.join(map(lambda char: format(int(char, 16), '04b'), f[0]))
 
 total_version = 0
+
+id_functions = {0: sum, 1: math.prod, 2: min, 3: max, 5: operator.gt, 6: operator.lt, 7: operator.eq}
 def read_packet(inp_str, how_many_packets):
   curr_str  =inp_str[:]
-  global total_version
+  global total_version # part 1
   totals = []
   for _ in range(how_many_packets):
-    cur_version = int(curr_str[:3],2)
-    total_version += cur_version
+    cur_version = int(curr_str[:3],2) # part 1
+    total_version += cur_version # part 1
     cur_id = int(curr_str[3:6],2)
     curr_str = curr_str[6:]
     if cur_id == 4:
@@ -43,21 +36,10 @@ def read_packet(inp_str, how_many_packets):
         while (bits_to_check - (curr_str_len-len(curr_str))) != 0:
           curr_str, total_tmp = read_packet(curr_str, 1)
           total += total_tmp
-      match cur_id:
-        case 0:
-          totals.append(sum(total))
-        case 1:
-          totals.append(math.prod(total))
-        case 2:
-          totals.append(min(total))
-        case 3:
-          totals.append(max(total))
-        case 5:
-          totals.append(int(total[0] > total[1]))
-        case 6:
-          totals.append(int(total[0] < total[1]))
-        case 7:
-          totals.append(int(total[0] == total[1]))
+      if cur_id < 5:
+        totals.append(int(id_functions[cur_id](total)))
+      else: # lt, gt and eq requires input unpacked
+        totals.append(int(id_functions[cur_id](*total)))
   return [curr_str, totals]
 
 final_str, totals = read_packet(binary_data, 1)
