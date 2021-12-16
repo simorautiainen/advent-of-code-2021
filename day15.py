@@ -31,7 +31,7 @@ def calc(inp_data, start=point(0,0)):
   i = 0
   while True:
     if i % 1000==0:
-      print(i)
+      print(f"{i} / {shape[0]*shape[1]}") # every 1000 iterations print to see progress
     i += 1
 
     min_point = point(*list(zip(*np.where(djikstar_data==np.amin(djikstar_data))))[0][::-1])
