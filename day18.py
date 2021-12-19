@@ -1,17 +1,13 @@
 import math
-import operator
-import collections
 import itertools
-import numpy as np
 import ast
 import functools
+
 with open("inputs/day18") as data:
   f = data.readlines()
   lists = []
   for line in f:
     lists.append(ast.literal_eval(line))
-
-
 
 def red(first, second):
   total_list = []
