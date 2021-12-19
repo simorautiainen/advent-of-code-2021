@@ -1,8 +1,6 @@
-import math
-import operator
 import collections
 import itertools
-import numpy as np
+
 with open("inputs/day17") as data:
   f = data.readlines()
   data = f[0].split(' ')
