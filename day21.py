@@ -1,6 +1,4 @@
-import math
 import itertools
-import ast
 import functools
 
 with open("inputs/day21") as data:
