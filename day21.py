@@ -17,7 +17,7 @@ def get_loser_score_times_dice_throws(p1_starting: int, p2_starting: int) -> int
       for _ in range(3):
         cube = next(cube_iter)
         player_cur[i] += cube
-      player_cur[i] = (player_cur[i]%10) if (player_cur[i] % 10) != 0 else 10
+      player_cur[i] = (player_cur[i] % 10) if (player_cur[i] % 10) != 0 else 10
       player_scores[i] += player_cur[i]
       die_rolls += 3
       if player_scores[i] >= 1000:
