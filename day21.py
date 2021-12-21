@@ -27,7 +27,7 @@ def get_loser_score_times_dice_throws(p1_starting: int, p2_starting: int) -> int
 print("Part 1:", get_loser_score_times_dice_throws(player1_starting, player2_starting))
 
 @functools.cache
-def rec_cube_ref(cur_player: int, cur_player_score: int, other_player: int, other_player_score: int, is_starting: bool = True) -> tuple[int, int]:
+def recurse_cube(cur_player: int, cur_player_score: int, other_player: int, other_player_score: int, is_starting: bool = True) -> tuple[int, int]:
   winners = (0, 0)
   for i in range(1,4):
     for k in range(1, 4):
@@ -38,9 +38,9 @@ def rec_cube_ref(cur_player: int, cur_player_score: int, other_player: int, othe
         if cur_iter_player_score >= 21:
           winners = (winners[0] + is_starting, winners[1] + (not is_starting))
         else:
-          all_this_path_winners = rec_cube_ref(other_player, other_player_score, cur_iter_player, cur_iter_player_score, not is_starting)
+          all_this_path_winners = recurse_cube(other_player, other_player_score, cur_iter_player, cur_iter_player_score, not is_starting)
           winners = (winners[0]+all_this_path_winners[0], winners[1]+all_this_path_winners[1])
   return winners
 
 
-print("Part 2", max(rec_cube_ref(player1_starting, 0, player2_starting, 0)))
+print("Part 2", max(recurse_cube(player1_starting, 0, player2_starting, 0)))
